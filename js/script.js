@@ -69,6 +69,10 @@ const playMusic = (track, pause=false) => {
     }
     document.querySelector(".songinfo").innerHTML = decodeURI(track);
     document.querySelector(".songtime").innerHTML = "00:00 / 00:00";
+    if (currentSong.ended) {
+        console.log("hi");
+        
+    }
 }
 
 async function displayAlbums() {
@@ -205,6 +209,17 @@ async function main() {
        
     })
 
+
+    // Automatically Play Next Song
+    currentSong.onended = function () {
+        console.log("hii");
+        let index = songs.indexOf(currentSong.src.split("/").slice(-1)[0])
+        if ((index + 1) < songs.length) {
+            playMusic(songs[index + 1])
+        } else {
+            playMusic(songs[0])
+        }
+    }
    
 
 }
