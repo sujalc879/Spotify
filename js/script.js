@@ -19,7 +19,7 @@ function secondsToMinutesSeconds(seconds) {
 
 async function getSongs(folder) {
     currFolder = folder;
-    let a = await fetch(`https://sujalc879.github.io/Spotify/${currFolder}/`)
+    let a = await fetch(`http://127.0.0.1:3000/${currFolder}/`)
     let response = await a.text() 
     
     let div = document.createElement("div");
@@ -76,7 +76,7 @@ const playMusic = (track, pause=false) => {
 }
 
 async function displayAlbums() {
-    let a = await (`https://sujalc879.github.io/Spotify/songs/`)
+    let a = await (`http://127.0.0.1:3000/songs/`)
     let response = await a.text() 
     
     let div = document.createElement("div");
@@ -92,7 +92,7 @@ async function displayAlbums() {
            let folder = e.href.split("/").slice(-2)[0]
            
         //    Get Meta data of Folder
-        let a = await fetch(`https://sujalc879.github.io/Spotify/songs/${folder}/info.json`)
+        let a = await fetch(`http://127.0.0.1:3000/songs/${folder}/info.json`)
         let response = await a.json()  
         
         cardContainer.innerHTML = cardContainer.innerHTML + `<div data-folder="${folder}" class="card ">
@@ -115,7 +115,7 @@ async function displayAlbums() {
      // Load the Playlist Whenever Card is Clicked
     Array.from(document.getElementsByClassName("card")).forEach(e=> { 
         e.addEventListener("click", async item=> {
-            songs = await getSongs(`spotify/songs/${item.currentTarget.dataset.folder}`); 
+            songs = await getSongs(`/songs/${item.currentTarget.dataset.folder}`); 
            playMusic(songs[0])
         })
     })
