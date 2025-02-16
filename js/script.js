@@ -61,7 +61,7 @@ async function getSongs(folder) {
 }
 
 const playMusic = (track, pause=false) => {
-    currentSong.src = `/${currFolder}/` + track
+    currentSong.src = `http://127.0.0.1:3000/${currFolder}/` + track
     if (!pause) {
         currentSong.play()
         play.src = "img/pause.svg"
@@ -72,7 +72,7 @@ const playMusic = (track, pause=false) => {
 }
 
 async function displayAlbums() {
-    let a = await (`http://127.0.0.1:3000/songs/`)
+    let a = await fetch(`http://127.0.0.1:3000/songs/`)
     let response = await a.text() 
     
     let div = document.createElement("div");
@@ -204,6 +204,18 @@ async function main() {
        }
        
     })
+
+
+    // Automatically Play Next Song
+    currentSong.onended = function () {
+        console.log("hii");
+        let index = songs.indexOf(currentSong.src.split("/").slice(-1)[0])
+        if ((index + 1) < songs.length) {
+            playMusic(songs[index + 1])
+        } else {
+            playMusic(songs[0])
+        }
+    }
 
    
 
